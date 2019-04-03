@@ -1,0 +1,125 @@
+#:import C kivy.utils.get_color_from_hex
+
+
+<TextInput>
+    multiline: False
+    padding: [10, 0.5*(self.height-self.line_height)]
+
+<ChatLabel@Label>:
+    text_size: (self.width, None) # Step 1
+    halign: 'left'
+    valign: 'top'
+    size_hint: (1, None) # Step 2
+    height: self.texture_size[1] # Step 3
+    color: C('#101010')
+
+
+
+<ScrollView>:
+    canvas.before:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+ScreenManager:
+    Screen:
+        name: 'login'
+        BoxLayout:
+            orientation: 'vertical'
+            GridLayout:
+                cols: 2
+                orientation: 'vertical'
+                Label:
+                    text: 'Server'
+                TextInput:
+                    id: server
+                    text: '127.0.0.1'
+                Label:
+                    text: 'Username'
+                TextInput:
+                    id: account
+                Label:
+                    text: 'Password'
+                TextInput:
+                    password_mask: 'true'
+                    id: pwd
+            Button:
+                text: 'login'
+                on_press: app.login()
+                size_hint: (1, None)
+                color: C('#00FF7F')
+            Button:
+                text: 'register'
+                on_press: app.swap_register()
+                size_hint: (1, None)
+                color: C('#BC1717')
+
+    Screen:
+        name: 'chatroom'
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                background_color: C('#FF7F00')
+                size_hint: (1, None)
+                text: 'Disconnect'
+                on_press: app.disconnect()
+                color: C('#FF7F00')
+            ScrollView:
+                ChatLabel:
+                    id: chat_logs
+                    text: ''
+            BoxLayout:
+                height: 90
+                orientation: 'horizontal'
+                padding: 0
+                size_hint: (1, None)
+                TextInput:
+                    id: message
+                    on_text_validate: app.send_msg()
+                Button:
+                    text: 'send'
+                    size_hint: (0.3, 1)
+                    color: C('#6B238E')
+                    on_press: app.send_msg()
+    Screen:
+        name: 'register'
+        BoxLayout:
+            orientation: 'vertical'
+            GridLayout:
+                orientation: 'vertical'
+                cols: 2
+                Label:
+                    text: 'Username'
+                    size_hint: (1, 0.25)
+                TextInput:
+                    id: username
+                    size_hint: (1, 0.25)
+                Label:
+                    text: 'Password'
+                    size_hint: (1, 0.25)
+                TextInput:
+                    id: pwd1
+                    size_hint: (1, 0.25)
+                Label:
+                    text: 'Password again'
+                    size_hint: (1, 0.25)
+                TextInput:
+                    id: pwd2
+                    size_hint: (1, 0.25)
+                Label:
+                    text: 'Nickname'
+                    size_hint: (1, 0.25)
+                TextInput:
+                    id: nickname
+                    size_hint: (1, 0.25)
+
+            Button:
+                text: 'Confirm'
+                size_hint: (1, 0.2)
+                on_press: app.register()
+            Button:
+                text: 'Back'
+                size_hint: (1, 0.2)
+                on_press: app.swap_login()
