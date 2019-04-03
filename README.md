@@ -5,6 +5,6 @@
 ## 客户端
 python ./app/main.py
 ## 服务器
-mysql创建chat数据库，user表（username， password， nickname）（varchar）
-python ./server/server.py
-待更新
+mysql创建chat数据库，user表（username， password， nickname）（varchar）  
+python ./server/server.py  
+待更新  
